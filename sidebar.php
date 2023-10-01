@@ -23,7 +23,17 @@
 
     <ul class="nav nav-pills nav-sidebar">
         <?php foreach(get_menu() as $key => $module): ?>
-        <?php foreach($module['menu'] as $menu): ?>
+        <?php 
+        foreach($module['menu'] as $menu): 
+            if(isset($menu['items']))
+            {
+                if(!is_item_allowed($menu['items'], auth()->id)) continue;
+            }
+            else
+            {
+                if(!is_allowed(parsePath($menu['route']), auth()->id)) continue;
+            }
+        ?>
         <li class="nav-item <?=isset($menu['items']) ? 'has-submenu' : ''?>">
             <a href="<?=isset($menu['items']) ? '#' : $menu['route'] ?>" class="nav-link fw-bold py-2 <?=(is_array($menu['activeState']) && in_array(getActive(), $menu['activeState'])) || getActive() == $menu['activeState'] ? 'active' : ''?>" >
                 <?php if(isset($menu['icon'])): ?>
@@ -36,7 +46,10 @@
             </a>
             <?php if(isset($menu['items'])): ?>
             <ul class="submenu collapse <?=(is_array($menu['activeState']) && in_array(getActive(), $menu['activeState'])) || getActive() == $menu['activeState'] ? 'show' : ''?>">
-                <?php foreach($menu['items'] as $item): ?>
+                <?php 
+                foreach($menu['items'] as $item): 
+                    if(!is_allowed(parsePath($item['route']), auth()->id)) continue;
+                ?>
                 <li>
                     <a class="nav-link py-2 <?=(is_array($item['activeState']) && in_array(getActive(), $item['activeState'])) || getActive() == $item['activeState'] ? 'active' : ''?>" href="<?=$item['route']?>">
                         <?php if(isset($item['icon'])): ?>
