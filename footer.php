@@ -17,6 +17,8 @@ ClassicEditor
         .catch( error => {
             console.error( error );
         } );
+
+$('.datatable').DataTable();
 </script>
 <?php foot_script() ?>
 </body>
