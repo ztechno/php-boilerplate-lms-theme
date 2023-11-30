@@ -12,11 +12,15 @@
 <script src="<?=asset('theme/assets/js/datatables-pagingtype/full_numbers_no_ellipses.js')?>"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/40.0.0/classic/ckeditor.js"></script>
 <script>
-ClassicEditor
-        .create( document.querySelector( '.ckeditor' ) )
-        .catch( error => {
-            console.error( error );
-        } );
+    try {
+        ClassicEditor
+                .create( document.querySelector( '.ckeditor' ) )
+                .catch( error => {
+                    console.error( error );
+                } );
+    } catch (error) {
+        
+    }
 
 $('.datatable').DataTable();
 </script>
